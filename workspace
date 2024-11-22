@@ -1,0 +1,12 @@
+# create and switch between workspaces:
+# terraform workspace new staging
+# terraform workspace new production
+# terraform workspace select staging
+
+# variable file for the selected environment:
+# terraform apply -var-file=staging.tfvars
+# terraform apply -var-file=production.tfvars
+
+# Check the current workspace with:
+# terraform workspace show
+# 
