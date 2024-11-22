@@ -23,10 +23,15 @@ pipeline {
             }
         }
 
-        stage('Terraform Action') {
+        stage('Terraform Plan') {
             steps {
-                echo "Terraform action is --> ${params.action}"
-                sh "terraform ${params.action} --auto-approve"
+                sh 'terraform plan -var-file=staging.tfvars'
+            }
+        }
+
+        stage('Terraform Apply') {
+            steps {
+                sh 'terraform apply -var-file=staging.tfvars -auto-approve'
             }
         }
     }
