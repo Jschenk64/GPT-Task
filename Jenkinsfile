@@ -29,9 +29,18 @@ pipeline {
             }
         }
 
-        stage('Terraform Apply') {
+        stage('Terraform Apply or Destroy') {
+            when {
+                expression { return params.action == 'apply' || params.action == 'destroy' }
+            }
             steps {
-                sh 'terraform apply -var-file=staging.tfvars -auto-approve'
+                script {
+                    if (params.action == 'apply') {
+                        sh 'terraform apply -var-file=staging.tfvars -auto-approve'
+                    } else if (params.action == 'destroy') {
+                        sh 'terraform destroy -var-file=staging.tfvars -auto-approve'
+                    }
+                }
             }
         }
     }
